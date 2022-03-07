@@ -1,5 +1,9 @@
 FROM alpine:latest
 
+LABEL author="classx@gmail.com"
+LABEL description="Alpine based, very simple openvpn server"
+LABEL version="0.0.1"
+
 RUN apk update && \
     apk add openvpn socat curl openssl && \
     rm -rf /var/cache/apk/*
