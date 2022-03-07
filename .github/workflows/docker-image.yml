@@ -1,0 +1,19 @@
+name: Build Docker Image CI
+on:
+  push:
+    branches: [ release ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASS: ${{secrets.DOCKER_PASS}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag classx/tiny-vpn:$(date +%s) --tag classx/tiny-vpn:latest
+    - name: Docker Push
+      run: docker push classx/tiny-vpn
